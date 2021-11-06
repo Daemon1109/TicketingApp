@@ -1,42 +1,8 @@
-import express, { json } from 'express';
-import 'express-async-errors';
 import mongoose from 'mongoose';
-import cookieSession from 'cookie-session';
 
-import { currentuserRouter } from './routes/currentuser';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { signupRouter } from './routes/signup';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
-
-const app = express();
-app.use(json());
-
-// Configuring express to trust the proxy connections
-app.set('trust proxy', true);
+import { app } from './app';
 
 const PORT = process.env.PORT || 3000;
-
-// Use middlewares
-app.use(
-  cookieSession({
-    signed: false,
-    secure: true,
-  })
-); // Middleware for handling cookies
-
-// Use API routers
-app.use(currentuserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
-
-app.all('*', () => {
-  throw new NotFoundError();
-});
-
-app.use(errorHandler); // Custom error handler
 
 const startUp = async () => {
   if (!process.env.JWT_KEY) {
