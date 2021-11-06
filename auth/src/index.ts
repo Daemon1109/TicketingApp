@@ -18,6 +18,14 @@ app.set('trust proxy', true);
 
 const PORT = process.env.PORT || 3000;
 
+// Use middlewares
+app.use(
+  cookieSession({
+    signed: false,
+    secure: true,
+  })
+); // Middleware for handling cookies
+
 // Use API routers
 app.use(currentuserRouter);
 app.use(signinRouter);
@@ -28,14 +36,7 @@ app.all('*', () => {
   throw new NotFoundError();
 });
 
-// Use middlewares
 app.use(errorHandler); // Custom error handler
-app.use(
-  cookieSession({
-    signed: false,
-    secure: true,
-  })
-); // Middleware for handling cookies
 
 const startUp = async () => {
   if (!process.env.JWT_KEY) {
