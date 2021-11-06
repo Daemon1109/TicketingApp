@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
 import { BadRequestError } from '../errors/bad-request-error';
-import { RequestValidationError } from '../errors/request-validation-error';
+import { validateRequest } from '../middlewares/validate-request';
 import { User } from '../models/User';
 
 const router = express.Router();
@@ -17,15 +17,8 @@ router.post(
       .isLength({ min: 6, max: 30 })
       .withMessage('Password must be between 6 & 30 characters'),
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
-    // Validate the request
-    const errors = validationResult(req);
-
-    // If there are any validation errors, throw a RequestValidationError
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
-
     // Extract information from request body
     const { email, password } = req.body;
 
