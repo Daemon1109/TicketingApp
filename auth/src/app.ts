@@ -19,7 +19,7 @@ app.set('trust proxy', true);
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+    secure: process.env.NODE_ENV !== 'test',
   })
 ); // Middleware for handling cookies
 
