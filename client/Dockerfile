@@ -4,7 +4,7 @@ WORKDIR /ticketing-app/client
 
 COPY package.json .
 
-RUN yarn install --production
+RUN yarn install
 
 COPY . .
 
