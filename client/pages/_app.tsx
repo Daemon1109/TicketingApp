@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css'         // Add bootstrap support
 import type { AppContext, AppProps } from 'next/app'
 import buildAxiosClient from './api/build-axios-client'
 import { CurrentUser } from '../modals/currentuser';
+import Header from '../components/Header'
 
 interface Props {
   currentUser?: CurrentUser
@@ -13,7 +14,7 @@ interface Props {
 function MyApp({ Component, pageProps, currentUser }: AppProps & Props) {
   return (
     <div>
-      <h1>Header! {currentUser?.email}</h1>
+      <Header currentUser={currentUser}></Header>
       <Component {...pageProps} />
     </div>
   )
