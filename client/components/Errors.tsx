@@ -1,4 +1,4 @@
-import { ErrorResponse } from "../modals/ErrorResponse";
+import type { ErrorResponse } from "../modals/ErrorResponse";
 
 interface Props {
 	errors?: ErrorResponse
