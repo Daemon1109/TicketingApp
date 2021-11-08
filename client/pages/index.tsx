@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ currentUser }: Props) => {
-  return currentUser ? <h1>You are signed in</h1> : <h1>You are NOT singed in</h1>;
+  return currentUser ? <h1>You are signed in</h1> : <h1>You are NOT signed in</h1>;
 };
 
 Home.getInitialProps = async (context) => {
