@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Router from 'next/router';
 import React, { useState } from "react";
 import { useRequest } from "../../hooks/use-request";
+import Errors from "../../components/Errors";
 
 const Signup: NextPage = () => {
 	const [email, setEmail] = useState('');
@@ -43,14 +44,7 @@ const Signup: NextPage = () => {
 					className="form-control" />
 			</div>
 			<br />
-			{errors?.error && (
-				<div className="alert alert-danger">
-					<h4>Oooooops....</h4>
-					<ul className="my-0">
-						{errors.error.map(err => <li key={err.message}>{err.message}</li>)}
-					</ul>
-				</div>
-			)}
+			<Errors errors={errors}/>
 			<button className="btn btn-primary">Sign Up</button>
 		</form>
 	);
