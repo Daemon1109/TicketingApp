@@ -7,7 +7,10 @@ import {
   errorHandler,
   NotFoundError,
 } from '@daemonticketing/common';
-import { TicketRouter } from './routes/new';
+import { newTicketRouter } from './routes/newTicket';
+import { getTicketRouter } from './routes/getTicket';
+import { getAllTicketsRouter } from './routes/getAllTickets';
+import { updateTicketRouter } from './routes/updateTicket';
 
 const app = express();
 app.use(json());
@@ -26,7 +29,10 @@ app.use(
 app.use(currentUser); // Middleware to add current user details on request
 
 // Use API routers
-app.use(TicketRouter);
+app.use(newTicketRouter);
+app.use(getTicketRouter);
+app.use(getAllTicketsRouter);
+app.use(updateTicketRouter);
 
 app.all('*', () => {
   throw new NotFoundError();
