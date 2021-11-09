@@ -8,11 +8,12 @@ const startUp = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined in environment');
   }
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI must be defined in environment');
+  }
 
   try {
-    // await mongoose.connect('mongodb://localhost:27017/ticketing-auth');
-    const mongoURI =
-      'mongodb://tickets-mongo-srv:27017/TicketingApp?retryWrites=true&w=majority';
+    const mongoURI = process.env.MONGO_URI;
     await mongoose.connect(mongoURI);
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {

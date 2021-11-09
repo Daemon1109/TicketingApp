@@ -16,6 +16,8 @@ spec:
         - name: auth
           image: sahilds03/auth
           env:
+            - name: MONGO_URI
+              value: 'mongodb://auth-mongo-srv:27017/TicketingApp-auth?retryWrites=true&w=majority'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
