@@ -2,7 +2,12 @@ import express, { json } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
-import { errorHandler, NotFoundError } from '@daemonticketing/common';
+import {
+  currentUser,
+  errorHandler,
+  NotFoundError,
+} from '@daemonticketing/common';
+import { TicketRouter } from './routes/new';
 
 const app = express();
 app.use(json());
@@ -18,7 +23,10 @@ app.use(
   })
 ); // Middleware for handling cookies
 
+app.use(currentUser); // Middleware to add current user details on request
+
 // Use API routers
+app.use(TicketRouter);
 
 app.all('*', () => {
   throw new NotFoundError();
