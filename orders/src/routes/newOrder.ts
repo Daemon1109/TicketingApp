@@ -10,6 +10,8 @@ import {
 } from '@daemonticketing/common';
 import { Ticket } from '../models/Ticket';
 import { Order, OrderStatus } from '../models/Order';
+import { natsWrapper } from '../nats-wrapper';
+import { OrderCreatedNATSPublisher } from '../events/publishers/order-created-nats-publisher';
 
 const router = express.Router();
 
@@ -59,6 +61,17 @@ router.post(
     await order.save();
 
     // Publish an event for created order
+    new OrderCreatedNATSPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
+
     res.status(201).send(order);
   }
 );

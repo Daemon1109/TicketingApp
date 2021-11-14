@@ -9,6 +9,8 @@ import {
   validateRequest,
 } from '@daemonticketing/common';
 import { Order, OrderStatus } from '../models/Order';
+import { natsWrapper } from '../nats-wrapper';
+import { OrderCancelledNATSPublisher } from '../events/publishers/order-cancelled-nats-publisher';
 
 const router = express.Router();
 
@@ -38,6 +40,14 @@ router.delete(
     order.status = OrderStatus.Cancelled;
 
     await order.save();
+
+    // Publish Order Cancelled event
+    new OrderCancelledNATSPublisher(natsWrapper.client).publish({
+      id: order.id,
+      ticket: {
+        id: order.ticket.id,
+      },
+    });
 
     res.status(204).send(order);
   }
