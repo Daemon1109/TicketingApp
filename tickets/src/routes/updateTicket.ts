@@ -9,6 +9,8 @@ import {
 } from '@daemonticketing/common';
 
 import { Ticket } from '../models/Ticket';
+import { natsWrapper } from '../nats-wrapper';
+import { TicketUpdatedNATSPublisher } from '../events/publishers/ticket-updated-nats-publisher';
 
 const router = express.Router();
 
@@ -39,6 +41,13 @@ router.put(
     });
 
     await ticket.save();
+
+    await new TicketUpdatedNATSPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.status(200).send(ticket);
   }
