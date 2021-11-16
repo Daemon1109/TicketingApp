@@ -3,6 +3,7 @@ import { Order, OrderStatus } from './Order';
 
 // An interface to define the properties that are required to create a new Ticket
 interface TicketAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -42,7 +43,11 @@ const ticketSchema = new mongoose.Schema(
 );
 
 ticketSchema.statics.build = (ticketAttrs: TicketAttrs) => {
-  return new Ticket(ticketAttrs);
+  return new Ticket({
+    _id: ticketAttrs.id,
+    title: ticketAttrs.title,
+    price: ticketAttrs.price,
+  });
 };
 
 ticketSchema.methods.isReserved = async function () {
