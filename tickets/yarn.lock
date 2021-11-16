@@ -302,10 +302,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@daemonticketing/common@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@daemonticketing/common/-/common-0.0.4.tgz#99501c41ec25587595199a65a5526ba3e91f7e73"
-  integrity sha512-ZP0BYJHAbhYMDYJoOO4/iVo1MWkngdED/Ul5Gvb5svGQJnahyO04HdsumPh0UmDB2C+p4s5RVzyOdRfGJtZQwQ==
+"@daemonticketing/common@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@daemonticketing/common/-/common-0.0.8.tgz#93588c12d0a2a4ed09e71e5ee49c91fb3eb09f52"
+  integrity sha512-wfrvLQYcoPhdhLFjAkV4mI93SEPDoXl2TMhYU8PN5cKOfq5znKGwyyebTVMH0C4qufLSRGLhPhSsMj9U04XiMg==
   dependencies:
     cookie-session "^1.4.0"
     express "^4.17.1"
