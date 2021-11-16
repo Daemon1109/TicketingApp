@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/Ticket';
@@ -5,6 +6,7 @@ import { getCookie } from '../../test/setup';
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'Test Title',
     price: 10.0,
   });
