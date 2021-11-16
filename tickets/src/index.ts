@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 
+import { OrderCreatedNATSListener } from './events/listeners/order-created-nats-listener';
+import { OrderCancelledNATSListener } from './events/listeners/order-cancelled-nats-listener';
+
 const PORT = process.env.PORT || 3000;
 
 const startUp = async () => {
@@ -35,6 +38,9 @@ const startUp = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new OrderCreatedNATSListener(natsWrapper.client).listen();
+    new OrderCancelledNATSListener(natsWrapper.client).listen();
 
     const mongoURI = process.env.MONGO_URI;
     await mongoose.connect(mongoURI);
