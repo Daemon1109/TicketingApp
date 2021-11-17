@@ -1,4 +1,5 @@
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedNATSListener } from './events/listeners/order-created-nats-listener';
 
 const startUp = async () => {
   if (!process.env.NATS_URL) {
@@ -24,6 +25,8 @@ const startUp = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new OrderCreatedNATSListener(natsWrapper.client).listen();
   } catch (err) {
     console.error(err);
   }
