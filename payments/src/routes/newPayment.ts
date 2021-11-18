@@ -10,9 +10,12 @@ import {
   NotAuthorizedError,
   OrderStatus,
 } from '@daemonticketing/common';
+
 import { Order } from '../models/Order';
 import { Payment } from '../models/Payment';
 import { stripe } from '../stripe';
+import { PaymentCreatedNATSPublisher } from '../events/publishers/payment-created-nats-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -61,7 +64,13 @@ router.post(
     });
     await payment.save();
 
-    res.status(201).send({ success: true });
+    await new PaymentCreatedNATSPublisher(natsWrapper.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
+
+    res.status(201).send({ id: payment.id });
   }
 );
 
