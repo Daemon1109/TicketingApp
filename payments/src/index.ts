@@ -23,6 +23,9 @@ const startUp = async () => {
   if (!process.env.NATS_CLIENT_ID) {
     throw new Error('NATS_CLIENT_ID must be defined in environment');
   }
+  if (!process.env.STRIPE_KEY) {
+    throw new Error('STRIPE_KEY must be defined in environment');
+  }
 
   try {
     await natsWrapper.connect(

@@ -7,6 +7,7 @@ import {
   errorHandler,
   NotFoundError,
 } from '@daemonticketing/common';
+import { newPaymentRouter } from './routes/newPayment';
 
 const app = express();
 app.use(json());
@@ -25,6 +26,7 @@ app.use(
 app.use(currentUser); // Middleware to add current user details on request
 
 // Use API routers
+app.use(newPaymentRouter);
 
 app.all('*', () => {
   throw new NotFoundError();
