@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR /ticketing-app/tickets
+WORKDIR /ticketing-app/expiration
 
 COPY package.json .
 
