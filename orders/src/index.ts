@@ -5,6 +5,7 @@ import { natsWrapper } from './nats-wrapper';
 import { TicketCreatedNATSListener } from './events/listeners/ticket-created-nats-listener';
 import { TicketUpdatedNATSListener } from './events/listeners/ticket-updated-nats-listener';
 import { ExpirationCompletedNATSListener } from './events/listeners/expiration-completed-nats-listener';
+import { PaymentCreatedNATSListener } from './events/listeners/payment-creates-nats-listener';
 
 const PORT = process.env.PORT || 3000;
 
@@ -43,6 +44,8 @@ const startUp = async () => {
     new TicketUpdatedNATSListener(natsWrapper.client).listen();
 
     new ExpirationCompletedNATSListener(natsWrapper.client).listen();
+
+    new PaymentCreatedNATSListener(natsWrapper.client).listen();
 
     const mongoURI = process.env.MONGO_URI;
     await mongoose.connect(mongoURI);
