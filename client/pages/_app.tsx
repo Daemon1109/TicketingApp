@@ -15,7 +15,9 @@ function MyApp({ Component, pageProps, currentUser }: AppProps & Props) {
   return (
     <div>
       <Header currentUser={currentUser}></Header>
-      <Component {...pageProps} />
+      <div className="container">
+        <Component currentUser={currentUser} {...pageProps} />
+      </div>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import axios, { Method } from 'axios';
+import axios, { AxiosResponse, Method } from 'axios';
 import { useState } from 'react';
 import { ErrorResponse } from '../modals/ErrorResponse';
 
@@ -6,18 +6,22 @@ interface useRequestArguments {
   url: string;
   method: Method;
   body?: any;
-  onSuccess?: () => void;
+  onSuccess?: (data: AxiosResponse['data']) => void;
 }
 
 const useRequest = ({ url, method, body, onSuccess }: useRequestArguments) => {
   const [errors, setErrors] = useState<ErrorResponse>();
 
-  const doRequest = async () => {
+  const doRequest = async (props = {}) => {
     try {
-      const response = await axios({ method, url, data: body });
+      const response = await axios({
+        method,
+        url,
+        data: { ...body, ...props },
+      });
 
       if (onSuccess) {
-        onSuccess();
+        onSuccess(response.data);
       }
 
       setErrors(undefined);
