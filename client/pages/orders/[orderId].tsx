@@ -27,6 +27,21 @@ const ShowOrder: NextPage<Props> = ({ currentUser, order }: Props) => {
 		onSuccess: () => Router.push('/orders')
 	});
 
+	// useEffect should be written after useState or top of component
+	useEffect(() => {
+		const findTimeLeft = () => {
+			const msLeft = new Date(order.expiresAt).getTime() - new Date().getTime();
+			setTimeLeft(Math.round(msLeft / 1000));
+		}
+
+		findTimeLeft();
+		const timerId = setInterval(findTimeLeft, 1000);
+
+		return () => {
+			clearInterval(timerId);
+		}
+	}, []);
+
 	if(order.status === "complete") {
 		return (
 			<div>
@@ -48,19 +63,6 @@ const ShowOrder: NextPage<Props> = ({ currentUser, order }: Props) => {
 		)
 	}
 
-	useEffect(() => {
-		const findTimeLeft = () => {
-			const msLeft = new Date(order.expiresAt).getTime() - new Date().getTime();
-			setTimeLeft(Math.round(msLeft / 1000));
-		}
-
-		findTimeLeft();
-		const timerId = setInterval(findTimeLeft, 1000);
-
-		return () => {
-			clearInterval(timerId);
-		}
-	}, []);
 
 	if (timeLeft <= 0) {
 		return (
